@@ -37,4 +37,4 @@ lerna-debug.log*
 # db file
 .env
 .db
-migration
+migrations
