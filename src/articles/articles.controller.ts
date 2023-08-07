@@ -15,11 +15,11 @@ import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { ArticleEntity } from './entities/article.entity';
 
 @Controller('articles')
+@ApiTags('articles')
 export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Post()
-  @ApiTags('articles')
   @ApiCreatedResponse({ type: ArticleEntity })
   async create(@Body() createArticleDto: CreateArticleDto) {
     return new ArticleEntity(
@@ -28,7 +28,6 @@ export class ArticlesController {
   }
 
   @Get()
-  @ApiTags('articles')
   @ApiOkResponse({ type: [ArticleEntity] })
   async findAll() {
     const articles = await this.articlesService.findAll();
@@ -36,7 +35,6 @@ export class ArticlesController {
   }
 
   @Get('drafts')
-  @ApiTags('articles')
   @ApiOkResponse({ type: [ArticleEntity] })
   async findDrafts() {
     const articles = await this.articlesService.findDrafts();
@@ -44,14 +42,12 @@ export class ArticlesController {
   }
 
   @Get(':id')
-  @ApiTags('articles')
   @ApiOkResponse({ type: ArticleEntity })
   async findOne(@Param('id', ParseIntPipe) id: number) {
     return new ArticleEntity(await this.articlesService.findOne(id));
   }
 
   @Patch(':id')
-  @ApiTags('articles')
   @ApiOkResponse({ type: ArticleEntity })
   async update(
     @Param('id', ParseIntPipe) id: number,
@@ -63,7 +59,6 @@ export class ArticlesController {
   }
 
   @Delete(':id')
-  @ApiTags('articles')
   @ApiOkResponse({ type: ArticleEntity })
   async remove(@Param('id', ParseIntPipe) id: number) {
     return new ArticleEntity(await this.articlesService.remove(id));
