@@ -4,25 +4,23 @@ import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { PrismaModule } from 'src/prisma/prisma.module';
+import { UsersModule } from 'src/users/users.module';
+import { JwtStrategy } from './jwt.strategy';
 
-// 随机化的字符串，用于签署 JWT 令牌
-const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-let secret = '';
-for (let i = 0; i < 32; i++) {
-  secret += chars[Math.floor(Math.random() * 62)];
-}
-export const jwtSecret = secret;
+export const jwtSecret =
+  'c6d4e8a2b0f7d9c3e5a1b2c8d7e9f0a4b1c8d7e9f0a4b1c8d7e9f0a4b1c8d7e';
 
 @Module({
   imports: [
+    UsersModule,
     PrismaModule,
     PassportModule,
     JwtModule.register({
       secret: jwtSecret,
-      signOptions: { expiresIn: '5m' }, // e.g. 30s, 7d, 24h
+      signOptions: { expiresIn: '1d' }, // e.g. 30s, 7d, 24h
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}
