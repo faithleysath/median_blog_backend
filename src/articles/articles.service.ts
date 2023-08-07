@@ -6,30 +6,30 @@ import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class ArticlesService {
   constructor(private readonly prisma: PrismaService) {}
-  create(createArticleDto: CreateArticleDto) {
-    return this.prisma.article.create({ data: createArticleDto });
+  async create(createArticleDto: CreateArticleDto) {
+    return await this.prisma.article.create({ data: createArticleDto });
   }
 
-  findAll() {
-    return this.prisma.article.findMany({ where: { published: true } });
+  async findAll() {
+    return await this.prisma.article.findMany({ where: { published: true } });
   }
 
-  findDrafts() {
-    return this.prisma.article.findMany({ where: { published: false } });
+  async findDrafts() {
+    return await this.prisma.article.findMany({ where: { published: false } });
   }
 
-  findOne(id: number) {
-    return this.prisma.article.findUniqueOrThrow({ where: { id } });
+  async findOne(id: number) {
+    return await this.prisma.article.findUniqueOrThrow({ where: { id } });
   }
 
-  update(id: number, updateArticleDto: UpdateArticleDto) {
-    return this.prisma.article.update({
+  async update(id: number, updateArticleDto: UpdateArticleDto) {
+    return await this.prisma.article.update({
       where: { id },
       data: updateArticleDto,
     });
   }
 
-  remove(id: number) {
-    return this.prisma.article.delete({ where: { id } });
+  async remove(id: number) {
+    return await this.prisma.article.delete({ where: { id } });
   }
 }
